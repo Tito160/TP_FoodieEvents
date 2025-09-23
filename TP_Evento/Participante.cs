@@ -7,10 +7,14 @@ namespace TP_Evento;
 
 public class Participante
 {
-    public int IdParticipante { get; set; }
-    public string Nombre { get; set; }
-    public string Correo { get; set; }
+    public int Id { get; set; }
+    public string NombreCompleto { get; set; }
+    public string Email { get; set; }
     public string Telefono { get; set; }
-    public string Documento { get; set; }
-    public string Restriccion { get; set; }
+    public string DocumentoIdentidad { get; set; }
+    public string RestriccionAlimentaria { get; set; } // opcional
+
+    // Métodos
+    public void ActualizarContacto(string nuevoEmail, string nuevoTelefono);
+    public override string ToString(); // para mostrar datos resumidos del participante
 }
