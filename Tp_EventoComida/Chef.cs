@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TP_Evento;
+namespace Tp_EventoComida;
 
 public class Chef
 {
@@ -34,24 +34,3 @@ public class Chef
 
     public override string ToString() => $"Chef: {NombreCompleto} ({Especialidad})";
 }
-public Chef(int id, string nombreCompleto, string especialidad, string nacionalidad, int aniosExperiencia, string email, string telefono)
-    {
-        ValidadorDatos.ValidarEmail(email);
-        ValidadorDatos.ValidarTelefono(telefono);
-
-        Id = id;
-        NombreCompleto = nombreCompleto;
-        Especialidad = especialidad;
-        Nacionalidad = nacionalidad;
-        AniosExperiencia = aniosExperiencia;
-        Email = email;
-        Telefono = telefono;
-    }
-
-    public void ActualizarContacto(string nuevoEmail, string nuevoTelefono)
-    {
-        ValidadorDatos.ValidarEmail(nuevoEmail);
-        ValidadorDatos.ValidarTelefono(nuevoTelefono);
-        Email = nuevoEmail;
-        Telefono = nuevoTelefono;
-    }

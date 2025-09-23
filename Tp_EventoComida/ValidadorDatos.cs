@@ -1,27 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TP_Evento
-using System;
 using System.Text.RegularExpressions;
 
-namespace TP_Evento
+namespace Tp_EventoComida
 {
     public static class ValidadorDatos
     {
         // Valida email con regex simple
         public static void ValidarEmail(string email)
         {
-            if (string.IsNullOrWhiteSpace(email) || 
+            if (string.IsNullOrWhiteSpace(email) ||
                 !Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
                 throw new ErrorValidacionException($"Email inválido: {email}");
             }
         }
 
-        // Valida teléfono numérico y longitud lógica
+        // Valida teléfono numérico y longitud lógica (7 a 15 dígitos)
         public static void ValidarTelefono(string telefono)
         {
             if (string.IsNullOrWhiteSpace(telefono) || !Regex.IsMatch(telefono, @"^\d{7,15}$"))
