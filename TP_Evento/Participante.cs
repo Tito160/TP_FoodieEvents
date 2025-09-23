@@ -7,14 +7,28 @@ namespace TP_Evento;
 
 public class Participante
 {
-    public int Id { get; set; }
-    public string NombreCompleto { get; set; }
-    public string Email { get; set; }
-    public string Telefono { get; set; }
-    public string DocumentoIdentidad { get; set; }
-    public string RestriccionAlimentaria { get; set; } // opcional
+    public int Id { get; private set; }
+    public string NombreCompleto { get; private set; }
+    public string Email { get; private set; }
+    public string Telefono { get; private set; }
+    public string DocumentoIdentidad { get; private set; }
+    public string RestriccionAlimentaria { get; private set; }
 
-    // Métodos
-    public void ActualizarContacto(string nuevoEmail, string nuevoTelefono);
-    public override string ToString(); // para mostrar datos resumidos del participante
+    public Participante(int id, string nombreCompleto, string email, string telefono, string documentoIdentidad, string restriccionAlimentaria = "")
+    {
+        Id = id;
+        NombreCompleto = nombreCompleto;
+        Email = email;
+        Telefono = telefono;
+        DocumentoIdentidad = documentoIdentidad;
+        RestriccionAlimentaria = restriccionAlimentaria;
+    }
+
+    public void ActualizarContacto(string nuevoEmail, string nuevoTelefono)
+    {
+        Email = nuevoEmail;
+        Telefono = nuevoTelefono;
+    }
+
+    public override string ToString() => $"Participante: {NombreCompleto} ({DocumentoIdentidad})";
 }
