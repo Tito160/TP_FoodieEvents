@@ -32,3 +32,15 @@ public class Participante
 
     public override string ToString() => $"Participante: {NombreCompleto} ({DocumentoIdentidad})";
 }
+public Participante(int id, string nombreCompleto, string email, string telefono, string documentoIdentidad, string restriccionAlimentaria = "")
+{
+    ValidadorDatos.ValidarEmail(email);
+    ValidadorDatos.ValidarTelefono(telefono);
+
+    Id = id;
+    NombreCompleto = nombreCompleto;
+    Email = email;
+    Telefono = telefono;
+    DocumentoIdentidad = documentoIdentidad;
+    RestriccionAlimentaria = restriccionAlimentaria;
+}

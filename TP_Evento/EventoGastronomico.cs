@@ -45,4 +45,34 @@ public class EventoGastronomico
 
     public override string ToString() => $"Evento: {Nombre} ({Tipo}) | {FechaInicio:dd/MM/yyyy}";
 }
+public EventoGastronomico(int id, string nombre, string descripcion, string tipo, DateTime fechaInicio,
+                          DateTime fechaFin, int capacidadMaxima, decimal precioPorEntrada, string ubicacion, Chef organizador)
+{
+    ValidadorDatos.ValidarTipoEvento(tipo);
+    ValidadorDatos.ValidarFechasEvento(fechaInicio, fechaFin);
+    ValidadorDatos.ValidarCapacidad(capacidadMaxima);
+    ValidadorDatos.ValidarPrecio(precioPorEntrada);
+
+    if (organizador == null)
+        throw new ErrorValidacionException("El evento debe tener un chef organizador.");
+
+    Id = id;
+    Nombre = nombre;
+    Descripcion = descripcion;
+    Tipo = tipo;
+    FechaInicio = fechaInicio;
+    FechaFin = fechaFin;
+    CapacidadMaxima = capacidadMaxima;
+    PrecioPorEntrada = precioPorEntrada;
+    Ubicacion = ubicacion;
+    Organizador = organizador;
+    Reservas = new List<Reserva>();
+}
+
+public void AgregarReserva(Reserva reserva)
+{
+    if (!HayCupoDisponible())
+        throw new ErrorValidacionException("No hay cupo disponible para este evento.");
+    Reservas.Add(reserva);
+}
 

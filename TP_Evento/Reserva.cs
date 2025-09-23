@@ -15,26 +15,42 @@ public class Reserva
     public string MetodoPago { get; private set; } // ahora string
     public string Estado { get; private set; } // ahora string
 
-    public Reserva(int id, Participante participante, EventoGastronomico evento)
-    {
-        Id = id;
-        Participante = participante;
-        Evento = evento;
-        FechaReserva = DateTime.Now;
-        Pagado = false;
-        Estado = "En espera";
-    }
+public Reserva(int id, Participante participante, EventoGastronomico evento)
+{
+    Id = id;
+    Participante = participante;
+    Evento = evento;
+    FechaReserva = DateTime.Now;
+    Pagado = false;
+    Estado = "En espera";
+}
+public void ConfirmarPago(string metodoPago)
+{
+    Pagado = true;
+    MetodoPago = metodoPago;
+    Estado = "Confirmada";
+}
 
-    public void ConfirmarPago(string metodoPago)
-    {
-        Pagado = true;
-        MetodoPago = metodoPago;
-        Estado = "Confirmada";
-    }
+public void CancelarReserva() => Estado = "Cancelada";
+public void PonerEnEspera() => Estado = "En espera";
 
-    public void CancelarReserva() => Estado = "Cancelada";
-    public void PonerEnEspera() => Estado = "En espera";
+public override string ToString() =>
+    $"Reserva #{Id} - {Participante.NombreCompleto} | Estado: {Estado} | Pagado: {Pagado}";
+}
+public void ConfirmarPago(string metodoPago)
+{
+    ValidadorDatos.ValidarMetodoPago(metodoPago);
+    Pagado = true;
+    MetodoPago = metodoPago;
+    Estado = "Confirmada";
+}
 
-    public override string ToString() =>
-        $"Reserva #{Id} - {Participante.NombreCompleto} | Estado: {Estado} | Pagado: {Pagado}";
+public void CancelarReserva()
+{
+    Estado = "Cancelada";
+}
+
+public void PonerEnEspera()
+{
+    Estado = "En espera";
 }
