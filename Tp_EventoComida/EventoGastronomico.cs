@@ -4,7 +4,7 @@ using Tp_EventoComida;
 
 namespace Tp_EventoComida
 {
-    public abstract class EventoBase : IEvento
+    public abstract class EventoGastronomico : IEvento
     {
         public int Id { get; protected set; }
         public string Nombre { get; protected set; }

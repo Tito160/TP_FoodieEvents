@@ -7,20 +7,28 @@ namespace Tp_EventoComida
     {
         public int Id { get; private set; }
         public Participante Participante { get; private set; }
-        public IEvento EventoGastronomico { get; private set; } // ✅ Cambiar de EventoGastronomico a IEvento
+        public IEvento EventoGastronomico { get; private set; } // ✅ Nombre consistente
         public DateTime FechaReserva { get; private set; }
         public bool Pagado { get; private set; }
         public string MetodoPago { get; private set; }
         public string Estado { get; private set; }
 
         /// <summary>
-        /// Constructor actualizado para trabajar con cualquier tipo de evento
+        /// Constructor con validaciones
         /// </summary>
-        public Reserva(int id, Participante participante, IEvento evento) // ✅ Cambiar parámetro
+        public Reserva(int id, Participante participante, IEvento eventoGastronomico)
         {
+            // ✅ VALIDACIONES DE NULL
+            if (participante == null)
+                throw new ErrorValidacionException("El participante es requerido para la reserva.");
+            
+            if (evento == null)
+                throw new ErrorValidacionException("El evento es requerido para la reserva.");
+
+            // ✅ ASIGNACIONES CORRECTAS
             Id = id;
             Participante = participante;
-            Evento = evento;
+            Evento = evento; // ✅ Mismo nombre que la propiedad
             FechaReserva = DateTime.Now;
             Pagado = false;
             Estado = "En espera";
@@ -29,15 +37,15 @@ namespace Tp_EventoComida
         public void ConfirmarPago(string metodoPago)
         {
             ValidadorDatos.ValidarMetodoPago(metodoPago);
+            
             Pagado = true;
             MetodoPago = metodoPago;
             Estado = "Confirmada";
 
-            // ✅ Agregar reserva al evento (funciona con cualquier implementación de IEvento)
+            // ✅ Agregar reserva al evento
             Evento.AgregarReserva(this);
         }
 
-        // Resto de métodos permanecen igual...
         public void CancelarReserva()
         {
             Estado = "Cancelada";
@@ -46,7 +54,7 @@ namespace Tp_EventoComida
         public override string ToString()
         {
             return $"🎫 Reserva #{Id} - {Participante.NombreCompleto} | " +
-                $"Evento: {Evento.Nombre} | Estado: {Estado} | Pagado: {Pagado}";
+                   $"Evento: {EventoGastronomico.Nombre} | Estado: {Estado} | Pagado: {Pagado}"; // ✅ Evento (no EventoGastronomico)
         }
     }
 }
