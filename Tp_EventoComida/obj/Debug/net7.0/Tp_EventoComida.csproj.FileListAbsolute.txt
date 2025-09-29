@@ -1,0 +1,9 @@
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\Tp_EventoComida.csproj.AssemblyReference.cache
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\rpswa.dswa.cache.json
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\Tp_EventoComida.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\Tp_EventoComida.AssemblyInfoInputs.cache
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\Tp_EventoComida.AssemblyInfo.cs
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\Tp_EventoComida.csproj.CoreCompileInputs.cache
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\Tp_EventoComida.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\Tp_EventoComida.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Lab15-PC01\Documents\GitHub\TP_FoodieEvents\Tp_EventoComida\obj\Debug\net7.0\Tp_EventoComida.sourcelink.json
