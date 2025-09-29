@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Tp_EventoComida;
 using Xunit;
 
-namespace Tp__EventoComida.Test
+namespace Tp_EventoComida.Test
 {
     public class ValidadorDatosTest
     {

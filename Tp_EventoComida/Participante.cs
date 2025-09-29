@@ -2,14 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tp_EventoComida;
 
 namespace Tp_EventoComida;
-
-using System;
-
-namespace Tp_EventoComida
-{
-    public class Participante
+public class Participante
     {
         public int Id { get; private set; }
         public string NombreCompleto { get; private set; }
@@ -50,4 +46,4 @@ namespace Tp_EventoComida
             return $"Participante: {NombreCompleto} ({DocumentoIdentidad}) | Email: {Email} | Tel: {Telefono}";
         }
     }
-}
+

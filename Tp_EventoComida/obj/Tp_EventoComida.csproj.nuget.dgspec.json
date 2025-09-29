@@ -1,30 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/mnt/Datos/Repos/TP_FoodieEvents/Tp_EventoComida/Tp_EventoComida.csproj": {}
+    "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents2\\Tp_EventoComida\\Tp_EventoComida.csproj": {}
   },
   "projects": {
-    "/mnt/Datos/Repos/TP_FoodieEvents/Tp_EventoComida/Tp_EventoComida.csproj": {
+    "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents2\\Tp_EventoComida\\Tp_EventoComida.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/mnt/Datos/Repos/TP_FoodieEvents/Tp_EventoComida/Tp_EventoComida.csproj",
+        "projectUniqueName": "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents2\\Tp_EventoComida\\Tp_EventoComida.csproj",
         "projectName": "Tp_EventoComida",
-        "projectPath": "/mnt/Datos/Repos/TP_FoodieEvents/Tp_EventoComida/Tp_EventoComida.csproj",
-        "packagesPath": "/home/et12alumno/.nuget/packages/",
-        "outputPath": "/mnt/Datos/Repos/TP_FoodieEvents/Tp_EventoComida/obj/",
+        "projectPath": "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents2\\Tp_EventoComida\\Tp_EventoComida.csproj",
+        "packagesPath": "C:\\Users\\psarmiento2167\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents2\\Tp_EventoComida\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/et12alumno/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\psarmiento2167\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net8.0"
+          "net7.0"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net8.0": {
-            "targetAlias": "net8.0",
+          "net7.0": {
+            "targetAlias": "net7.0",
             "projectReferences": {}
           }
         },
@@ -35,8 +35,18 @@
         }
       },
       "frameworks": {
-        "net8.0": {
-          "targetAlias": "net8.0",
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -49,11 +59,14 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.118/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,8 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "FCFEKul0MIwRQQZt9gVpOgC3+xa+s3Hjk1uC//LWcAfzlj/CDXMJ5CstHYGzY6sTlSDcL2CnlUF9vEpfUG/iAA==",
+  "dgSpecHash": "3p6riVYIQZregbQvpjx1H/m5WXHrEYizfa17k2EiXeWmLPt/1Wc0tWIZzZ0mS07xC3NHwiQjoM7Jji9vVznuwQ==",
   "success": true,
-  "projectFilePath": "/mnt/Datos/Repos/TP_FoodieEvents/Tp_EventoComida/Tp_EventoComida.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents2\\Tp_EventoComida\\Tp_EventoComida.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\psarmiento2167\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.5\\microsoft.aspnetcore.openapi.7.0.5.nupkg.sha512",
+    "C:\\Users\\psarmiento2167\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\psarmiento2167\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\psarmiento2167\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\psarmiento2167\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\psarmiento2167\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\psarmiento2167\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
   "logs": []
 }
