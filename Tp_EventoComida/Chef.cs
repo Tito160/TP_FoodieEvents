@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Tp_EventoComida;
 
-public class Chef
+public class Chef : Persona
 {
     public int Id { get; private set; }
     public string NombreCompleto { get; private set; }
@@ -15,22 +15,35 @@ public class Chef
     public string Email { get; private set; }
     public string Telefono { get; private set; }
 
-    public Chef(int id, string nombreCompleto, string especialidad, string nacionalidad, int aniosExperiencia, string email, string telefono)
+// Chef.cs
+    /// Constructor específico para Chef que llama al constructor base
+    public Chef(int id, string nombreCompleto, string especialidad, string nacionalidad, 
+                int aniosExperiencia, string email, string telefono)
+        : base(id, nombreCompleto, email, telefono) // ✅ Llama al constructor base
     {
-        Id = id;
-        NombreCompleto = nombreCompleto;
+        // 🏗️ INICIALIZACIÓN DE PROPIEDADES ESPECÍFICAS
         Especialidad = especialidad;
         Nacionalidad = nacionalidad;
         AniosExperiencia = aniosExperiencia;
-        Email = email;
-        Telefono = telefono;
     }
 
-    public void ActualizarContacto(string nuevoEmail, string nuevoTelefono)
+    // 🔹 IMPLEMENTACIÓN ESPECÍFICA DE COMPORTAMIENTOS
+
+    /// Implementación específica para Chef del método abstracto
+    /// Muestra información especializada del chef
+    public override string PresentarInformacion()
     {
-        Email = nuevoEmail;
-        Telefono = nuevoTelefono;
+        return $"👨‍🍳 Chef: {NombreCompleto} | Especialidad: {Especialidad} | " +
+            $"Experiencia: {AniosExperiencia} años | Nacionalidad: {Nacionalidad}";
     }
 
-    public override string ToString() => $"Chef: {NombreCompleto} ({Especialidad})";
+    /// Extiende el comportamiento base de registro con lógica específica de Chef
+    public override void Registrar()
+    {
+        base.Registrar(); // ✅ Ejecuta el comportamiento base
+        Console.WriteLine($"Chef especializado en {Especialidad} registrado exitosamente.");
+    }
+
+    /// Representación específica para Chef
+    public override string ToString() => PresentarInformacion();
 }

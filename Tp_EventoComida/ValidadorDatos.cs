@@ -68,5 +68,14 @@ namespace Tp_EventoComida
             if (Array.IndexOf(estadosValidos, estado) == -1)
                 throw new ErrorValidacionException($"Estado de reserva inválido: {estado}");
         }
+        // Agregar en ValidadorDatos.cs
+        /// Valida que el tipo de invitado sea uno de los permitidos
+        public static void ValidarTipoInvitado(string tipo)
+        {
+            string[] tiposValidos = { "Crítico", "Influencer", "Figura Reconocida" };
+            if (Array.IndexOf(tiposValidos, tipo) == -1)
+                throw new ErrorValidacionException($"Tipo de invitado inválido: {tipo}");
+        }
     }
 }
+

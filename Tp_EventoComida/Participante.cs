@@ -1,3 +1,4 @@
+// Participante.cs
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,45 +6,61 @@ using System.Threading.Tasks;
 using Tp_EventoComida;
 
 namespace Tp_EventoComida;
-public class Participante
+
+/// Clase Participante que hereda de Persona y especializa el comportamiento para participantes
+public class Participante : Persona
+{
+    // 🔹 PROPIEDADES ESPECÍFICAS DE PARTICIPANTE
+    public string DocumentoIdentidad { get; private set; }
+    public string RestriccionAlimentaria { get; private set; }
+
+    /// <summary>
+    /// Constructor específico para Participante
+    /// </summary>
+    public Participante(int id, string nombreCompleto, string email, string telefono, 
+                    string documentoIdentidad, string restriccionAlimentaria = "")
+        : base(id, nombreCompleto, email, telefono) // ✅ Llama al constructor base
     {
-        public int Id { get; private set; }
-        public string NombreCompleto { get; private set; }
-        public string Email { get; private set; }
-        public string Telefono { get; private set; }
-        public string DocumentoIdentidad { get; private set; }
-        public string RestriccionAlimentaria { get; private set; }
+        // 🏗️ INICIALIZACIÓN DE PROPIEDADES ESPECÍFICAS
+        DocumentoIdentidad = documentoIdentidad;
+        RestriccionAlimentaria = restriccionAlimentaria;
+    }
 
-        // Constructor con validaciones
-        public Participante(int id, string nombreCompleto, string email, string telefono, string documentoIdentidad, string restriccionAlimentaria = "")
+    // 🔹 IMPLEMENTACIÓN ESPECÍFICA DE COMPORTAMIENTOS
+
+    /// <summary>
+    /// Implementación específica para Participante del método abstracto
+    /// Muestra información especializada del participante
+    /// </summary>
+    public override string PresentarInformacion()
+    {
+        string info = $"🎟️ Participante: {NombreCompleto} | Documento: {DocumentoIdentidad}";
+        
+        // 📋 Información adicional sobre restricciones alimentarias
+        if (!string.IsNullOrEmpty(RestriccionAlimentaria))
         {
-            // Validaciones
-            ValidadorDatos.ValidarEmail(email);
-            ValidadorDatos.ValidarTelefono(telefono);
-
-            // Asignación de propiedades
-            Id = id;
-            NombreCompleto = nombreCompleto;
-            Email = email;
-            Telefono = telefono;
-            DocumentoIdentidad = documentoIdentidad;
-            RestriccionAlimentaria = restriccionAlimentaria;
+            info += $" | Restricciones: {RestriccionAlimentaria}";
         }
+        
+        return info;
+    }
 
-        // Método para actualizar contacto con validaciones
-        public void ActualizarContacto(string nuevoEmail, string nuevoTelefono)
+    /// <summary>
+    /// Extiende el comportamiento base de registro con lógica específica de Participante
+    /// </summary>
+    public override void Registrar()
+    {
+        base.Registrar(); // ✅ Ejecuta el comportamiento base
+        
+        // 🚨 Información importante sobre restricciones alimentarias
+        if (!string.IsNullOrEmpty(RestriccionAlimentaria))
         {
-            ValidadorDatos.ValidarEmail(nuevoEmail);
-            ValidadorDatos.ValidarTelefono(nuevoTelefono);
-
-            Email = nuevoEmail;
-            Telefono = nuevoTelefono;
-        }
-
-        // Resumen del participante
-        public override string ToString()
-        {
-            return $"Participante: {NombreCompleto} ({DocumentoIdentidad}) | Email: {Email} | Tel: {Telefono}";
+            Console.WriteLine($"Se han registrado restricciones alimentarias: {RestriccionAlimentaria}");
         }
     }
 
+    /// <summary>
+    /// Representación específica para Participante
+    /// </summary>
+    public override string ToString() => PresentarInformacion();
+}
