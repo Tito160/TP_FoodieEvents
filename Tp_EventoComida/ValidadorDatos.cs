@@ -5,7 +5,6 @@ namespace Tp_EventoComida
 {
     public static class ValidadorDatos
     {
-        // Valida email con regex simple
         public static void ValidarEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email) ||
@@ -15,7 +14,6 @@ namespace Tp_EventoComida
             }
         }
 
-        // Valida teléfono numérico y longitud lógica (7 a 15 dígitos)
         public static void ValidarTelefono(string telefono)
         {
             if (string.IsNullOrWhiteSpace(telefono) || !Regex.IsMatch(telefono, @"^\d{7,15}$"))
@@ -24,28 +22,24 @@ namespace Tp_EventoComida
             }
         }
 
-        // Valida fechas de evento
         public static void ValidarFechasEvento(DateTime inicio, DateTime fin)
         {
             if (fin < inicio)
                 throw new ErrorValidacionException("La fecha de fin no puede ser anterior a la fecha de inicio.");
         }
 
-        // Valida que la capacidad máxima sea positiva
         public static void ValidarCapacidad(int capacidad)
         {
             if (capacidad <= 0)
                 throw new ErrorValidacionException("La capacidad máxima debe ser mayor que 0.");
         }
 
-        // Valida precio
         public static void ValidarPrecio(decimal precio)
         {
             if (precio < 0)
                 throw new ErrorValidacionException("El precio no puede ser negativo.");
         }
 
-        // Valida tipo de evento permitido
         public static void ValidarTipoEvento(string tipo)
         {
             string[] tiposValidos = { "Cata", "Feria", "Clase", "Cena Tematica" };
@@ -53,7 +47,6 @@ namespace Tp_EventoComida
                 throw new ErrorValidacionException($"Tipo de evento inválido: {tipo}");
         }
 
-        // Valida método de pago
         public static void ValidarMetodoPago(string metodo)
         {
             string[] metodosValidos = { "Tarjeta", "Transferencia", "Efectivo" };
@@ -61,21 +54,37 @@ namespace Tp_EventoComida
                 throw new ErrorValidacionException($"Método de pago inválido: {metodo}");
         }
 
-        // Valida estado de reserva
         public static void ValidarEstadoReserva(string estado)
         {
             string[] estadosValidos = { "Confirmada", "Cancelada", "En espera" };
             if (Array.IndexOf(estadosValidos, estado) == -1)
                 throw new ErrorValidacionException($"Estado de reserva inválido: {estado}");
         }
-        // Agregar en ValidadorDatos.cs
-        /// Valida que el tipo de invitado sea uno de los permitidos
+
         public static void ValidarTipoInvitado(string tipo)
         {
             string[] tiposValidos = { "Crítico", "Influencer", "Figura Reconocida" };
             if (Array.IndexOf(tiposValidos, tipo) == -1)
                 throw new ErrorValidacionException($"Tipo de invitado inválido: {tipo}");
         }
+
+        public static void ValidarPlataformaVirtual(string plataforma)
+        {
+            string[] plataformasValidas = { "Zoom", "Teams", "YouTube", "Google Meet", "Webex", "Otra" };
+            if (Array.IndexOf(plataformasValidas, plataforma) == -1)
+                throw new ErrorValidacionException($"Plataforma virtual no soportada: {plataforma}");
+        }
+
+        public static void ValidarCapacidadVirtual(int capacidad)
+        {
+            if (capacidad < 0)
+                throw new ErrorValidacionException("La capacidad no puede ser negativa.");
+        }
+
+        public static void ValidarDuracionEvento(int duracionMinutos)
+        {
+            if (duracionMinutos <= 0)
+                throw new ErrorValidacionException("La duración del evento debe ser mayor a 0 minutos.");
+        }
     }
 }
-

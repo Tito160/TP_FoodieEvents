@@ -2,43 +2,37 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tp_EventoComida;
+using System.Collections.Generic;
+using System.Linq;
 
-// 🔹 INICIALIZACIÓN: Crea el constructor de la aplicación web ASP.NET Core
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔹 SWAGGER SERVICES: Agrega servicios para documentación automática de la API
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 🔹 CONSTRUCCIÓN: Compila la aplicación con todos los servicios configurados
 var app = builder.Build();
 
-// 🔹 SWAGGER UI: Habilita la interfaz de Swagger solo en entorno de desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-// 🔹 MIDDLEWARE ERRORES: Manejo global de excepciones personalizadas
 app.Use(async (context, next) =>
 {
     try
     {
-        await next(); // Ejecuta el siguiente middleware/endpoint
+        await next();
     }
-    catch (ErrorValidacionException ex) // Captura nuestras excepciones personalizadas
+    catch (ErrorValidacionException ex)
     {
-        context.Response.StatusCode = 400; // Bad Request
+        context.Response.StatusCode = 400;
         context.Response.ContentType = "application/json";
-        await context.Response.WriteAsJsonAsync(new
-        {
-            error = ex.Message
-        });
+        await context.Response.WriteAsJsonAsync(new { error = ex.Message });
     }
-    catch (Exception ex) // Captura cualquier otra excepción
+    catch (Exception ex)
     {
-        context.Response.StatusCode = 500; // Internal Server Error
+        context.Response.StatusCode = 500;
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsJsonAsync(new
         {
@@ -48,60 +42,107 @@ app.Use(async (context, next) =>
     }
 });
 
-// 🔹 SEGURIDAD: Redirección automática a HTTPS para conexiones seguras
 app.UseHttpsRedirection();
 
-// 🔹 BASE DE DATOS EN MEMORIA: Listas que simulan tablas de base de datos
+// 🔹 BASE DE DATOS EN MEMORIA ACTUALIZADA
 var chefs = new List<Chef>();
-var eventos = new List<EventoGastronomico>();
 var participantes = new List<Participante>();
+var invitadosEspeciales = new List<InvitadoEspecial>();
+var eventos = new List<EventoBase>(); // Cambiado a EventoBase
 var reservas = new List<Reserva>();
 
+// 🔹 INICIALIZAR SERVICIO DE INFORMES
+var servicioInformes = new ServicioInformes(
+    eventos,
+    chefs.Cast<Persona>().Concat(participantes.Cast<Persona>()).Concat(invitadosEspeciales).ToList(),
+    reservas
+);
+
 // ==========================
-// 🔹 ENDPOINTS CHEF - CRUD completo para gestión de chefs
+// 🔹 ENDPOINTS PERSONAS - Trabajan con interfaz IPersona
 // ==========================
+
+// Chef endpoints
 app.MapPost("/chefs", (Chef chef) =>
 {
-    // CREATE: Agrega un nuevo chef a la lista
+    ValidadorDatos.ValidarEmail(chef.Email);
+    ValidadorDatos.ValidarTelefono(chef.Telefono);
     chefs.Add(chef);
     return Results.Created($"/chefs/{chef.Id}", chef);
 });
 
-app.MapGet("/chefs", () => Results.Ok(chefs)); // READ: Obtiene todos los chefs
+app.MapGet("/chefs", () => Results.Ok(chefs));
 
 app.MapGet("/chefs/{id}", (int id) =>
 {
-    // READ BY ID: Busca un chef específico por su ID
     var chef = chefs.FirstOrDefault(c => c.Id == id);
     return chef is not null ? Results.Ok(chef) : Results.NotFound();
 });
 
-// ==========================
-// 🔹 ENDPOINTS EVENTO - CRUD para eventos gastronómicos
-// ==========================
-app.MapPost("/eventos", (EventoGastronomico evento) =>
+// Participante endpoints
+app.MapPost("/participantes", (Participante participante) =>
 {
-    // CREATE: Crea un nuevo evento gastronómico
-    eventos.Add(evento);
-    return Results.Created($"/eventos/{evento.Id}", evento);
+    ValidadorDatos.ValidarEmail(participante.Email);
+    ValidadorDatos.ValidarTelefono(participante.Telefono);
+    participantes.Add(participante);
+    return Results.Created($"/participantes/{participante.Id}", participante);
 });
 
-app.MapGet("/eventos", () => Results.Ok(eventos)); // READ: Lista todos los eventos
+app.MapGet("/participantes", () => Results.Ok(participantes));
+
+// Invitados especiales endpoints
+app.MapPost("/invitados-especiales", (InvitadoEspecial invitado) =>
+{
+    ValidadorDatos.ValidarEmail(invitado.Email);
+    ValidadorDatos.ValidarTelefono(invitado.Telefono);
+    ValidadorDatos.ValidarTipoInvitado(invitado.TipoInvitado);
+    invitadosEspeciales.Add(invitado);
+    return Results.Created($"/invitados-especiales/{invitado.Id}", invitado);
+});
+
+app.MapGet("/invitados-especiales", () => Results.Ok(invitadosEspeciales));
+
+// Endpoint unificado para todas las personas
+app.MapGet("/personas", () =>
+{
+    var todasLasPersonas = chefs.Cast<IPersona>()
+        .Concat(participantes.Cast<IPersona>())
+        .Concat(invitadosEspeciales.Cast<IPersona>());
+    return Results.Ok(todasLasPersonas);
+});
+
+// ==========================
+// 🔹 ENDPOINTS EVENTOS - Trabajan con interfaz IEvento
+// ==========================
+
+// Eventos presenciales
+app.MapPost("/eventos/presenciales", (EventoPresencial evento) =>
+{
+    eventos.Add(evento);
+    return Results.Created($"/eventos/presenciales/{evento.Id}", evento);
+});
+
+// Eventos virtuales
+app.MapPost("/eventos/virtuales", (EventoVirtual evento) =>
+{
+    eventos.Add(evento);
+    return Results.Created($"/eventos/virtuales/{evento.Id}", evento);
+});
+
+// Endpoint unificado para todos los eventos
+app.MapGet("/eventos", () => Results.Ok(eventos));
 
 app.MapGet("/eventos/{id}", (int id) =>
 {
-    // READ BY ID: Obtiene un evento específico
     var evento = eventos.FirstOrDefault(e => e.Id == id);
     return evento is not null ? Results.Ok(evento) : Results.NotFound();
 });
 
 app.MapDelete("/eventos/{id}", (int id) =>
 {
-    // DELETE: Elimina un evento y sus reservas asociadas (eliminación en cascada)
     var evento = eventos.FirstOrDefault(e => e.Id == id);
     if (evento is null) return Results.NotFound();
 
-    // ❗ Política: si se elimina evento, también se eliminan reservas
     reservas.RemoveAll(r => r.Evento.Id == id);
     eventos.Remove(evento);
 
@@ -109,32 +150,18 @@ app.MapDelete("/eventos/{id}", (int id) =>
 });
 
 // ==========================
-// 🔹 ENDPOINTS PARTICIPANTE - Gestión de participantes
+// 🔹 ENDPOINTS RESERVAS
 // ==========================
-app.MapPost("/participantes", (Participante participante) =>
-{
-    // CREATE: Registra un nuevo participante
-    participantes.Add(participante);
-    return Results.Created($"/participantes/{participante.Id}", participante);
-});
 
-app.MapGet("/participantes", () => Results.Ok(participantes)); // READ: Lista participantes
-
-// ==========================
-// 🔹 ENDPOINTS RESERVA - Sistema completo de reservas
-// ==========================
 app.MapPost("/reservas", (int participanteId, int eventoId) =>
 {
-    // CREATE: Crea una nueva reserva con validaciones de negocio
     var participante = participantes.FirstOrDefault(p => p.Id == participanteId);
     var evento = eventos.FirstOrDefault(e => e.Id == eventoId);
 
-    // Validación: existencia de participante y evento
     if (participante is null || evento is null)
         return Results.BadRequest("Participante o Evento no encontrado.");
 
-    // ❗ Validación: evento no lleno (control de capacidad)
-    if (reservas.Count(r => r.Evento.Id == eventoId && r.Estado != "Cancelada") >= evento.CapacidadMaxima)
+    if (!evento.HayCupoDisponible())
         return Results.BadRequest("El evento ya está lleno.");
 
     var reserva = new Reserva(reservas.Count + 1, participante, evento);
@@ -143,11 +170,10 @@ app.MapPost("/reservas", (int participanteId, int eventoId) =>
     return Results.Created($"/reservas/{reserva.Id}", reserva);
 });
 
-app.MapGet("/reservas", () => Results.Ok(reservas)); // READ: Lista todas las reservas
+app.MapGet("/reservas", () => Results.Ok(reservas));
 
 app.MapPut("/reservas/{id}/pago", (int id, string metodoPago) =>
 {
-    // UPDATE: Confirma el pago de una reserva
     var reserva = reservas.FirstOrDefault(r => r.Id == id);
     if (reserva is null) return Results.NotFound();
 
@@ -157,7 +183,6 @@ app.MapPut("/reservas/{id}/pago", (int id, string metodoPago) =>
 
 app.MapPut("/reservas/{id}/cancelar", (int id) =>
 {
-    // UPDATE: Cancela una reserva (cambio de estado)
     var reserva = reservas.FirstOrDefault(r => r.Id == id);
     if (reserva is null) return Results.NotFound();
 
@@ -165,22 +190,76 @@ app.MapPut("/reservas/{id}/cancelar", (int id) =>
     return Results.Ok(reserva);
 });
 
-// 🔹 VALIDACIÓN EXTENDIDA: Endpoint con validaciones personalizadas para chefs
-app.MapPost("/chefs", (Chef chef) =>
+// ==========================
+// 🔹 ENDPOINTS INFORMES
+// ==========================
+
+app.MapGet("/informes", () =>
+{
+    var informesDisponibles = servicioInformes.ObtenerInformesDisponibles();
+    return Results.Ok(new { informes = informesDisponibles });
+});
+
+app.MapGet("/informes/{clave}", (string clave) =>
 {
     try
     {
-        // Valida formato de email y teléfono antes de guardar
-        ValidadorDatos.ValidarEmail(chef.Email);
-        ValidadorDatos.ValidarTelefono(chef.Telefono);
-        chefs.Add(chef);
-        return Results.Created($"/chefs/{chef.Id}", chef);
+        var informe = servicioInformes.GenerarInforme(clave);
+        return Results.Text(informe, "text/plain");
     }
     catch (ErrorValidacionException ex)
     {
-        return Results.BadRequest(ex.Message);
+        return Results.NotFound(new { error = ex.Message });
     }
 });
 
-// 🔹 INICIO SERVIDOR: Pone la aplicación en escucha de requests HTTP
+app.MapGet("/informes/{clave}/info", (string clave) =>
+{
+    try
+    {
+        var (titulo, descripcion) = servicioInformes.ObtenerInformacionInforme(clave);
+        return Results.Ok(new { titulo, descripcion });
+    }
+    catch (ErrorValidacionException ex)
+    {
+        return Results.NotFound(new { error = ex.Message });
+    }
+});
+
+app.MapGet("/informes/todos", () =>
+{
+    var todosLosInformes = servicioInformes.GenerarTodosLosInformes();
+    return Results.Ok(todosLosInformes);
+});
+
+// ==========================
+// 🔹 ENDPOINTS DE VALIDACIÓN
+// ==========================
+
+app.MapPost("/validar/email", (string email) =>
+{
+    try
+    {
+        ValidadorDatos.ValidarEmail(email);
+        return Results.Ok(new { valido = true, mensaje = "Email válido" });
+    }
+    catch (ErrorValidacionException ex)
+    {
+        return Results.BadRequest(new { valido = false, error = ex.Message });
+    }
+});
+
+app.MapPost("/validar/telefono", (string telefono) =>
+{
+    try
+    {
+        ValidadorDatos.ValidarTelefono(telefono);
+        return Results.Ok(new { valido = true, mensaje = "Teléfono válido" });
+    }
+    catch (ErrorValidacionException ex)
+    {
+        return Results.BadRequest(new { valido = false, error = ex.Message });
+    }
+});
+
 app.Run();

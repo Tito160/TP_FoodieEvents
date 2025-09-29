@@ -5,62 +5,42 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tp_EventoComida;
 
-namespace Tp_EventoComida;
-
-/// Clase Participante que hereda de Persona y especializa el comportamiento para participantes
-public class Participante : Persona
+namespace Tp_EventoComida
 {
-    // 🔹 PROPIEDADES ESPECÍFICAS DE PARTICIPANTE
-    public string DocumentoIdentidad { get; private set; }
-    public string RestriccionAlimentaria { get; private set; }
-
-    /// <summary>
-    /// Constructor específico para Participante
-    /// </summary>
-    public Participante(int id, string nombreCompleto, string email, string telefono, 
-                    string documentoIdentidad, string restriccionAlimentaria = "")
-        : base(id, nombreCompleto, email, telefono) // ✅ Llama al constructor base
+    public class Participante : Persona
     {
-        // 🏗️ INICIALIZACIÓN DE PROPIEDADES ESPECÍFICAS
-        DocumentoIdentidad = documentoIdentidad;
-        RestriccionAlimentaria = restriccionAlimentaria;
-    }
+        public string DocumentoIdentidad { get; private set; }
+        public string RestriccionAlimentaria { get; private set; }
 
-    // 🔹 IMPLEMENTACIÓN ESPECÍFICA DE COMPORTAMIENTOS
-
-    /// <summary>
-    /// Implementación específica para Participante del método abstracto
-    /// Muestra información especializada del participante
-    /// </summary>
-    public override string PresentarInformacion()
-    {
-        string info = $"🎟️ Participante: {NombreCompleto} | Documento: {DocumentoIdentidad}";
-        
-        // 📋 Información adicional sobre restricciones alimentarias
-        if (!string.IsNullOrEmpty(RestriccionAlimentaria))
+        public Participante(int id, string nombreCompleto, string email, string telefono, 
+                        string documentoIdentidad, string restriccionAlimentaria = "")
+            : base(id, nombreCompleto, email, telefono)
         {
-            info += $" | Restricciones: {RestriccionAlimentaria}";
+            DocumentoIdentidad = documentoIdentidad;
+            RestriccionAlimentaria = restriccionAlimentaria;
         }
-        
-        return info;
-    }
 
-    /// <summary>
-    /// Extiende el comportamiento base de registro con lógica específica de Participante
-    /// </summary>
-    public override void Registrar()
-    {
-        base.Registrar(); // ✅ Ejecuta el comportamiento base
-        
-        // 🚨 Información importante sobre restricciones alimentarias
-        if (!string.IsNullOrEmpty(RestriccionAlimentaria))
+        public override string PresentarInformacion()
         {
-            Console.WriteLine($"Se han registrado restricciones alimentarias: {RestriccionAlimentaria}");
+            string info = $"🎟️ Participante: {NombreCompleto} | Documento: {DocumentoIdentidad}";
+            
+            if (!string.IsNullOrEmpty(RestriccionAlimentaria))
+            {
+                info += $" | Restricciones: {RestriccionAlimentaria}";
+            }
+            
+            return info;
         }
-    }
 
-    /// <summary>
-    /// Representación específica para Participante
-    /// </summary>
-    public override string ToString() => PresentarInformacion();
+        public override void Registrar()
+        {
+            base.Registrar();
+            if (!string.IsNullOrEmpty(RestriccionAlimentaria))
+            {
+                Console.WriteLine($"Se han registrado restricciones alimentarias: {RestriccionAlimentaria}");
+            }
+        }
+
+        public override string ToString() => PresentarInformacion();
+    }
 }
