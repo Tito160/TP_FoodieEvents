@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Tp_EventoComida")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+419e766b72dd597cb1d607f5b044de7f376bd3d3")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c11deee5723eb838b6d353a69de1459b661b4ec")]
 [assembly: System.Reflection.AssemblyProductAttribute("Tp_EventoComida")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Tp_EventoComida")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

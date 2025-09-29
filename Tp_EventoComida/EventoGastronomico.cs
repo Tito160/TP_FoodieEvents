@@ -17,7 +17,7 @@ namespace Tp_EventoComida
         public Chef Organizador { get; protected set; }
         public List<Reserva> Reservas { get; protected set; }
 
-        protected EventoBase(int id, string nombre, string descripcion, string tipo, 
+        protected EventoGastronomico(int id, string nombre, string descripcion, string tipo, 
                         DateTime fechaInicio, DateTime fechaFin, int capacidadMaxima, 
                         decimal precioBase, Chef organizador)
         {

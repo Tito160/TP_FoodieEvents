@@ -45,7 +45,7 @@ namespace Tp_EventoComida
             return info;
         }
 
-        public decimal CalcularCostoAcceso(EventoBase evento)
+        public decimal CalcularCostoAcceso(EventoGastronomico evento)
         {
             return 0;
         }

@@ -7,12 +7,12 @@ namespace Tp_EventoComida
 {
     public class ServicioInformes
     {
-        private readonly List<EventoBase> _eventos;
+        private readonly List<EventoGastronomico> _eventos;
         private readonly List<Persona> _personas;
         private readonly List<Reserva> _reservas;
         private readonly Dictionary<string, IGeneradorInformes> _generadores;
 
-        public ServicioInformes(List<EventoBase> eventos, List<Persona> personas, List<Reserva> reservas)
+        public ServicioInformes(List<EventoGastronomico> eventos, List<Persona> personas, List<Reserva> reservas)
         {
             _eventos = eventos ?? throw new ArgumentNullException(nameof(eventos));
             _personas = personas ?? throw new ArgumentNullException(nameof(personas));

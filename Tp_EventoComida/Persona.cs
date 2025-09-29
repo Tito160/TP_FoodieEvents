@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Tp_EventoComida;
+
 
 // Persona.cs
 namespace Tp_EventoComida
@@ -41,7 +41,7 @@ namespace Tp_EventoComida
         {
             ValidadorDatos.ValidarEmail(nuevoEmail);
             ValidadorDatos.ValidarTelefono(nuevoTelefono);
-            
+
             Email = nuevoEmail;
             Telefono = nuevoTelefono;
         }
