@@ -2,76 +2,63 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tp_EventoComida.Interfaces; // ✅ AGREGA ESTE USING
 
 namespace Tp_EventoComida
 {
-    public class ServicioInformes : IGeneradorInformes
+    public abstract class ServicioInformes : IGeneradorInformes
     {
-        private readonly List<EventoGastronomico> _eventos;
-        private readonly List<Persona> _personas;
-        private readonly List<Reserva> _reservas;
-        private readonly Dictionary<string, IGeneradorInformes> _generadores;
+        protected List<IEvento> EventoGastronomico { get; private set; }
+        protected List<Persona> Personas { get; private set; }
+        protected List<Reserva> Reservas { get; private set; }
+        protected DateTime FechaGeneracion { get; private set; }
 
-        public ServicioInformes(List<EventoGastronomico> eventos, List<Persona> personas, List<Reserva> reservas)
+        protected ServicioInformes(List<IEvento> eventoGastronomico, List<Persona> personas, List<Reserva> reservas)
         {
-            _eventos = eventos ?? throw new ArgumentNullException(nameof(eventos));
-            _personas = personas ?? throw new ArgumentNullException(nameof(personas));
-            _reservas = reservas ?? throw new ArgumentNullException(nameof(reservas));
-            
-            _generadores = new Dictionary<string, IGeneradorInformes>();
-            RegistrarGeneradoresPorDefecto();
+            Eventos = eventoGastronomico ?? new List<IEvento>();
+            Personas = personas ?? new List<Persona>();
+            Reservas = reservas ?? new List<Reserva>();
+            FechaGeneracion = DateTime.Now;
         }
 
-        private void RegistrarGeneradoresPorDefecto()
+        public virtual string GenerarInforme()
         {
-            RegistrarGenerador("asistencia", new InformeEventosMayorAsistencia(_eventos, _personas, _reservas));
-            RegistrarGenerador("trayectoria", new InformeOrganizadoresTrayectoria(_eventos, _personas, _reservas));
-            RegistrarGenerador("participacion", new InformeParticipacionMultiple(_eventos, _personas, _reservas));
+            var informe = new StringBuilder();
+            informe.AppendLine(GenerarCabecera());
+            informe.AppendLine(GenerarCuerpo());
+            informe.AppendLine(GenerarPie());
+            return informe.ToString();
         }
 
-        public void RegistrarGenerador(string clave, IGeneradorInformes generador)
+        protected virtual string GenerarCabecera()
         {
-            if (string.IsNullOrWhiteSpace(clave))
-                throw new ArgumentException("La clave no puede estar vacía", nameof(clave));
-                
-            _generadores[clave.ToLower()] = generador;
+            return $"=============================================\n" +
+                $"📊 {ObtenerTitulo()}\n" +
+                $"=============================================\n" +
+                $"📋 Descripción: {ObtenerDescripcion()}\n" +
+                $"📅 Fecha de generación: {FechaGeneracion:dd/MM/yyyy HH:mm}\n" +
+                $"=============================================\n";
         }
 
-        public string GenerarInforme(string clave)
+        protected virtual string GenerarPie()
         {
-            if (_generadores.TryGetValue(clave.ToLower(), out var generador))
-            {
-                return generador.GenerarInforme();
-            }
-            
-            throw new ErrorValidacionException($"No se encontró un generador de informes con la clave: {clave}");
+            return $"=============================================\n" +
+                $"📈 Total de eventos analizados: {Eventos.Count}\n" +
+                $"👥 Total de personas en sistema: {Personas.Count}\n" +
+                $"🎫 Total de reservas registradas: {Reservas.Count}\n" +
+                $"=============================================";
         }
 
-        public List<string> ObtenerInformesDisponibles()
+        protected Dictionary<IEvento, int> ObtenerAsistenciaPorEvento()
         {
-            return _generadores.Keys.ToList();
+            return Eventos.ToDictionary(
+                evento => EventoGastronomico,
+                evento => Reservas.Count(r => r.Evento.Id == evento.Id && r.Estado == "Confirmada")
+            );
         }
 
-        public (string titulo, string descripcion) ObtenerInformacionInforme(string clave)
-        {
-            if (_generadores.TryGetValue(clave.ToLower(), out var generador))
-            {
-                return (generador.ObtenerTitulo(), generador.ObtenerDescripcion());
-            }
-            
-            throw new ErrorValidacionException($"No se encontró un generador de informes con la clave: {clave}");
-        }
-
-        public Dictionary<string, string> GenerarTodosLosInformes()
-        {
-            var resultados = new Dictionary<string, string>();
-            
-            foreach (var (clave, generador) in _generadores)
-            {
-                resultados[clave] = generador.GenerarInforme();
-            }
-            
-            return resultados;
-        }
+        protected abstract string GenerarCuerpo();
+        public abstract string ObtenerTitulo();
+        public abstract string ObtenerDescripcion();
     }
 }

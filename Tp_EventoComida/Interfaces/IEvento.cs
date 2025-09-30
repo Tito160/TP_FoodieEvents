@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-// IEvento.cs
 namespace Tp_EventoComida
 {
     public interface IEvento

@@ -21,12 +21,14 @@ namespace Tp_EventoComida
             Especialidad = especialidad;
             Seguidores = seguidores;
         }
+
         private void ValidarTipoInvitado(string tipo)
         {
             string[] tiposValidos = { "Crítico", "Influencer", "Figura Reconocida" };
             if (Array.IndexOf(tiposValidos, tipo) == -1)
                 throw new ErrorValidacionException($"Tipo de invitado inválido: {tipo}");
         }
+
         public override string PresentarInformacion()
         {
             string info = $"⭐ {TipoInvitado}: {NombreCompleto}";
@@ -45,7 +47,7 @@ namespace Tp_EventoComida
             return info;
         }
 
-        public decimal CalcularCostoAcceso(EventoGastronomico evento)
+        public decimal CalcularCostoAcceso(IEvento evento)
         {
             return 0;
         }

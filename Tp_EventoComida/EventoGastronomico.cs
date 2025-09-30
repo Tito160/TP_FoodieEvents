@@ -40,11 +40,8 @@ namespace Tp_EventoComida
             Organizador = organizador;
             Reservas = new List<Reserva>();
         }
-
         public virtual bool HayCupoDisponible() => Reservas.Count < CapacidadMaxima;
-
         public virtual int LugaresDisponibles() => CapacidadMaxima - Reservas.Count;
-
         public virtual void AgregarReserva(Reserva reserva)
         {
             if (!HayCupoDisponible())

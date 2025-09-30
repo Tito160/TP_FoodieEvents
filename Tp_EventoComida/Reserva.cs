@@ -7,28 +7,23 @@ namespace Tp_EventoComida
     {
         public int Id { get; private set; }
         public Participante Participante { get; private set; }
-        public IEvento EventoGastronomico { get; private set; } // ✅ Nombre consistente
+        public IEvento Evento { get; private set; }
         public DateTime FechaReserva { get; private set; }
         public bool Pagado { get; private set; }
         public string MetodoPago { get; private set; }
         public string Estado { get; private set; }
 
-        /// <summary>
-        /// Constructor con validaciones
-        /// </summary>
-        public Reserva(int id, Participante participante, IEvento eventoGastronomico)
+        public Reserva(int id, Participante participante, IEvento evento)
         {
-            // ✅ VALIDACIONES DE NULL
             if (participante == null)
                 throw new ErrorValidacionException("El participante es requerido para la reserva.");
             
             if (evento == null)
                 throw new ErrorValidacionException("El evento es requerido para la reserva.");
 
-            // ✅ ASIGNACIONES CORRECTAS
             Id = id;
             Participante = participante;
-            Evento = evento; // ✅ Mismo nombre que la propiedad
+            Evento = evento;
             FechaReserva = DateTime.Now;
             Pagado = false;
             Estado = "En espera";
@@ -42,7 +37,6 @@ namespace Tp_EventoComida
             MetodoPago = metodoPago;
             Estado = "Confirmada";
 
-            // ✅ Agregar reserva al evento
             Evento.AgregarReserva(this);
         }
 
@@ -54,7 +48,7 @@ namespace Tp_EventoComida
         public override string ToString()
         {
             return $"🎫 Reserva #{Id} - {Participante.NombreCompleto} | " +
-                   $"Evento: {EventoGastronomico.Nombre} | Estado: {Estado} | Pagado: {Pagado}"; // ✅ Evento (no EventoGastronomico)
+                $"Evento: {Evento.Nombre} | Estado: {Estado} | Pagado: {Pagado}";
         }
     }
 }

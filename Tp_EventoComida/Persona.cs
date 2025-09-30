@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
 // Persona.cs
+using System;
+
 namespace Tp_EventoComida
 {
     public abstract class Persona : IPersona
@@ -41,7 +42,7 @@ namespace Tp_EventoComida
         {
             ValidadorDatos.ValidarEmail(nuevoEmail);
             ValidadorDatos.ValidarTelefono(nuevoTelefono);
-
+            
             Email = nuevoEmail;
             Telefono = nuevoTelefono;
         }

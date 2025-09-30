@@ -12,7 +12,7 @@ namespace Tp_EventoComida
         public string DocumentoIdentidad { get; private set; }
         public string RestriccionAlimentaria { get; private set; }
 
-        public Participante(int id, string nombreCompleto, string email, string telefono, 
+        public Participante(int id, string nombreCompleto, string email, string telefono,
                         string documentoIdentidad, string restriccionAlimentaria = "")
             : base(id, nombreCompleto, email, telefono)
         {
