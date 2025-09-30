@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents3\\Tp_EventoComida\\Tp_EventoComida.csproj": {}
+    "/mnt/Datos/Repos/TP_FoodieEvents1/Tp_EventoComida/Tp_EventoComida.csproj": {}
   },
   "projects": {
-    "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents3\\Tp_EventoComida\\Tp_EventoComida.csproj": {
+    "/mnt/Datos/Repos/TP_FoodieEvents1/Tp_EventoComida/Tp_EventoComida.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents3\\Tp_EventoComida\\Tp_EventoComida.csproj",
+        "projectUniqueName": "/mnt/Datos/Repos/TP_FoodieEvents1/Tp_EventoComida/Tp_EventoComida.csproj",
         "projectName": "Tp_EventoComida",
-        "projectPath": "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents3\\Tp_EventoComida\\Tp_EventoComida.csproj",
-        "packagesPath": "C:\\Users\\psarmiento2167\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\psarmiento2167\\Documents\\GitHub\\TP_FoodieEvents3\\Tp_EventoComida\\obj\\",
+        "projectPath": "/mnt/Datos/Repos/TP_FoodieEvents1/Tp_EventoComida/Tp_EventoComida.csproj",
+        "packagesPath": "/home/et12alumno/.nuget/packages/",
+        "outputPath": "/mnt/Datos/Repos/TP_FoodieEvents1/Tp_EventoComida/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\psarmiento2167\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/home/et12alumno/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -58,6 +58,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.20, 7.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[7.0.20, 7.0.20]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.20, 7.0.20]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -66,7 +80,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.118/RuntimeIdentifierGraph.json"
         }
       }
     }

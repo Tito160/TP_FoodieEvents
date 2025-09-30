@@ -15,7 +15,7 @@ namespace Tp_EventoComida
 
         protected ServicioInformes(List<IEvento> eventoGastronomico, List<Persona> personas, List<Reserva> reservas)
         {
-            Eventos = eventoGastronomico ?? new List<IEvento>();
+            EventoGastronomico = eventoGastronomico ?? new List<IEvento>();
             Personas = personas ?? new List<Persona>();
             Reservas = reservas ?? new List<Reserva>();
             FechaGeneracion = DateTime.Now;
@@ -43,7 +43,7 @@ namespace Tp_EventoComida
         protected virtual string GenerarPie()
         {
             return $"=============================================\n" +
-                $"📈 Total de eventos analizados: {Eventos.Count}\n" +
+                $"📈 Total de eventos analizados: {EventoGastronomico.Count}\n" +
                 $"👥 Total de personas en sistema: {Personas.Count}\n" +
                 $"🎫 Total de reservas registradas: {Reservas.Count}\n" +
                 $"=============================================";
@@ -51,9 +51,9 @@ namespace Tp_EventoComida
 
         protected Dictionary<IEvento, int> ObtenerAsistenciaPorEvento()
         {
-            return Eventos.ToDictionary(
-                evento => EventoGastronomico,
-                evento => Reservas.Count(r => r.Evento.Id == evento.Id && r.Estado == "Confirmada")
+            return EventoGastronomico.ToDictionary(
+                EventoGastronomico => EventoGastronomico,
+                EventoGastronomico => Reservas.Count(r => r.Evento.Id == evento.Id && r.Estado == "Confirmada")
             );
         }
 
