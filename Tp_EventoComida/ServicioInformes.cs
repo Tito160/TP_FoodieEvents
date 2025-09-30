@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Tp_EventoComida
 {
-    public class ServicioInformes
+    public class ServicioInformes : IGeneradorInformes
     {
         private readonly List<EventoGastronomico> _eventos;
         private readonly List<Persona> _personas;
