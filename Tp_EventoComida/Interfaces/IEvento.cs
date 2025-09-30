@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Tp_EventoComida
+namespace Tp_EventoComida.Interfaces
 {
     public interface IEvento
     {

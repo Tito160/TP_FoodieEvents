@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Tp_EventoComida.Interfaces;
 using Tp_EventoComida;
 
 namespace Tp_EventoComida

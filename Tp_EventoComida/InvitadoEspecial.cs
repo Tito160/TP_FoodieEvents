@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Tp_EventoComida.Interfaces;
 
 namespace Tp_EventoComida
 {

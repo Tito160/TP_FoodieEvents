@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 // IPersona.cs
-namespace Tp_EventoComida
+namespace Tp_EventoComida.Interfaces
 {
     public interface IPersona
     {
