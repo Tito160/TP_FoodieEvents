@@ -4,18 +4,17 @@ using Microsoft.Extensions.Hosting;
 using Tp_EventoComida;
 using System.Collections.Generic;
 using System.Linq;
+using Tp_EventoComida.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
 }
 
 app.Use(async (context, next) =>
@@ -48,7 +47,7 @@ app.UseHttpsRedirection();
 var chefs = new List<Chef>();
 var participantes = new List<Participante>();
 var invitadosEspeciales = new List<InvitadoEspecial>();
-var eventos = new List<EventoBase>(); // Cambiado a EventoBase
+var eventos = new List<IEvento>(); // Cambiado a EventoBase
 var reservas = new List<Reserva>();
 
 // 🔹 INICIALIZAR SERVICIO DE INFORMES
@@ -196,7 +195,7 @@ app.MapPut("/reservas/{id}/cancelar", (int id) =>
 
 app.MapGet("/informes", () =>
 {
-    var informesDisponibles = servicioInformes.ObtenerInformesDisponibles();
+    var informesDisponibles = servicioInformes.ObtenerDescripcion();
     return Results.Ok(new { informes = informesDisponibles });
 });
 

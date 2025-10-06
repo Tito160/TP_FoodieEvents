@@ -1,19 +1,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Tp_EventoComida.Interfaces; // ✅ AGREGA ESTE USING
 
 namespace Tp_EventoComida
 {
-    public abstract class ServicioInformes : IGeneradorInformes
+    public class ServicioInformes : IGeneradorInformes
     {
-        protected List<IEvento> Evento { get; private set; }
-        protected List<Persona> Personas { get; private set; }
-        protected List<Reserva> Reservas { get; private set; }
-        protected DateTime FechaGeneracion { get; private set; }
+        public List<IEvento> Evento { get; private set; }
+        public List<Persona> Personas { get; private set; }
+        public List<Reserva> Reservas { get; private set; }
+        public DateTime FechaGeneracion { get; private set; }
 
-        protected ServicioInformes(List<IEvento> evento, List<Persona> personas, List<Reserva> reservas)
+        public ServicioInformes(List<IEvento> evento, List<Persona> personas, List<Reserva> reservas)
         {
             Evento = evento ?? new List<IEvento>();
             Personas = personas ?? new List<Persona>();
@@ -21,7 +22,7 @@ namespace Tp_EventoComida
             FechaGeneracion = DateTime.Now;
         }
 
-        public virtual string GenerarInforme()
+        public string GenerarInforme()
         {
             var informe = new StringBuilder();
             informe.AppendLine(GenerarCabecera());
@@ -30,7 +31,7 @@ namespace Tp_EventoComida
             return informe.ToString();
         }
 
-        protected virtual string GenerarCabecera()
+        public string GenerarCabecera()
         {
             return $"=============================================\n" +
                 $"📊 {ObtenerTitulo()}\n" +
@@ -40,7 +41,7 @@ namespace Tp_EventoComida
                 $"=============================================\n";
         }
 
-        protected virtual string GenerarPie()
+        public string GenerarPie()
         {
             return $"=============================================\n" +
                 $"📈 Total de eventos analizados: {Evento.Count}\n" +
@@ -49,16 +50,41 @@ namespace Tp_EventoComida
                 $"=============================================";
         }
 
-        protected Dictionary<IEvento, int> ObtenerAsistenciaPorEvento()
+        /*
+                public Dictionary<IEvento, int> ObtenerAsistenciaPorEvento()
+                {
+                    return Evento.ToDictionary(
+                        Evento => Evento,
+                        EventoGastronomico => Reservas.Count(r => r.Evento.Id == Evento. && r.Estado == "Confirmada")
+                    );
+                } */
+
+        public string GenerarCuerpo()
         {
-            return Evento.ToDictionary(
-                Evento => Evento,
-                EventoGastronomico => Reservas.Count(r => r.Evento.Id == evento.Id && r.Estado == "Confirmada")
-            );
+            throw new Exception("no implementado");
+        }
+        public string ObtenerTitulo()
+        {
+            throw new Exception("no implementado");
+        }
+        public string ObtenerDescripcion()
+        {
+                        throw new Exception("no implementado");
         }
 
-        protected abstract string GenerarCuerpo();
-        public abstract string ObtenerTitulo();
-        public abstract string ObtenerDescripcion();
+        internal (object titulo, object descripcion) ObtenerInformacionInforme(string clave)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal object? GenerarTodosLosInformes()
+        {
+            throw new NotImplementedException();
+        }
+
+        internal string? GenerarInforme(string clave)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

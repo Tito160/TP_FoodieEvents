@@ -1,6 +1,7 @@
 using System;
 
 using Tp_EventoComida;
+using Tp_EventoComida.Interfaces;
 
 namespace Tp_EventoComida
 {
